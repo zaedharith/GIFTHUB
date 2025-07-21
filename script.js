@@ -1,8 +1,8 @@
-
 const itemForm = document.getElementById('item-form');
 const itemList = document.getElementById('item-list');
 const passwordSection = document.getElementById('password-section');
 const adminPassword = "zaed123";
+const qr_image_url = "https://i.imgur.com/example-qr.png"; // replace this with your real QR
 
 let items = JSON.parse(localStorage.getItem('items')) || [];
 
@@ -26,22 +26,22 @@ function renderItems() {
         const itemEl = document.createElement('li');
         itemEl.className = 'item';
 
-        const imageHTML = item.image ? `<img src="\${item.image}" alt="Item Image" class="item-image">` : '';
-        const linkHTML = item.link ? `<a href="\${item.link}" target="_blank">🔗 View Item</a>` : '';
+        const imageHTML = item.image ? `<img src="${item.image}" alt="Item Image" class="item-image">` : '';
+        const linkHTML = item.link ? `<a href="${item.link}" target="_blank">🔗 View Item</a>` : '';
 
         itemEl.innerHTML = `
-            \${imageHTML}
-            <strong>\${item.name}</strong> - RM\${item.price.toFixed(2)} \${linkHTML}
-            <button onclick="removeItem(\${index})" style="float:right;">❌</button>
+            ${imageHTML}
+            <strong>${item.name}</strong> - RM${item.price.toFixed(2)} ${linkHTML}
+            <button onclick="removeItem(${index})" style="float:right;">❌</button>
             <div class="qr-section">
                 <p><strong>Scan to chip in!</strong></p>
-                <img src="https://i.imgur.com/example-qr.png" alt="Bank QR" class="qr-image">
+                <img src="${qr_image_url}" alt="Bank QR" class="qr-image">
             </div>
-            <div class="contributors" id="contributors-\${index}"></div>
-            <form onsubmit="addContribution(event, \${index})">
+            <div class="contributors" id="contributors-${index}"></div>
+            <form onsubmit="addContribution(event, ${index})">
                 <input class="contributor-name" placeholder="Your name" required>
                 <input class="contributor-amount" type="number" placeholder="Amount (RM)" required>
-<input class="contributor-note" placeholder="Note (e.g., for cake)">
+                <input class="contributor-note" placeholder="Note (e.g., for cake)">
                 <button type="submit">Chip in</button>
             </form>
         `;
@@ -57,8 +57,9 @@ function updateContributors(index) {
     let balance = items[index].price - total;
 
     container.innerHTML = contributions.map(c =>
-        `<p>${c.name}: RM${parseFloat(c.amount).toFixed(2)} — "${c.note || ""}"</p>` `<p>\${c.name}: RM\${parseFloat(c.amount).toFixed(2)}</p>`).join('') +
-                          `<p><strong>Total: RM\${total.toFixed(2)} | Remaining: RM\${balance.toFixed(2)}</strong></p>`;
+        `<p>${c.name}: RM${parseFloat(c.amount).toFixed(2)} — "${c.note || ""}"</p>`
+    ).join('') +
+    `<p><strong>Total: RM${total.toFixed(2)} | Remaining: RM${balance.toFixed(2)}</strong></p>`;
 }
 
 itemForm.addEventListener('submit', e => {
@@ -84,10 +85,11 @@ function addContribution(e, index) {
     const form = e.target;
     const name = form.querySelector('.contributor-name').value;
     const amount = parseFloat(form.querySelector('.contributor-amount').value);
-    const note = form.querySelector(".contributor-note").value;
+    const note = form.querySelector('.contributor-note').value;
     items[index].contributions.push({ name, amount, note });
     saveItems();
     renderItems();
 }
 
 renderItems();
+
