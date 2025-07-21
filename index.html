@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contribution Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>📝 Contribution Tracker</h1>
+        <div id="password-section">
+            <input type="password" id="admin-password" placeholder="Enter admin password">
+            <button onclick="checkPassword()">Unlock</button>
+        </div>
+
+        <form id="item-form" style="display:none;">
+            <input type="text" id="item-name" placeholder="Item name" required>
+            <input type="number" id="item-price" placeholder="Price" required>
+            <input type="url" id="item-link" placeholder="Item link (optional)">
+            <input type="url" id="item-image" placeholder="Image URL (optional)">
+            <button type="submit">Add Item</button>
+        </form>
+
+        <ul id="item-list"></ul>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
