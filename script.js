@@ -12,7 +12,7 @@ function renderItems() {
     items.forEach((item, index) => {
         const itemEl = document.createElement('li');
         itemEl.className = 'item';
-        itemEl.innerHTML = \`
+        itemEl.innerHTML = `
             <strong>\${item.name}</strong> - RM\${item.price.toFixed(2)}
             <button onclick="removeItem(\${index})" style="float:right;">❌</button>
             <div class="contributors" id="contributors-\${index}"></div>
@@ -21,7 +21,7 @@ function renderItems() {
                 <input class="contributor-amount" type="number" placeholder="Amount (RM)" required>
                 <button type="submit">Chip in</button>
             </form>
-        \`;
+        `;
         itemList.appendChild(itemEl);
         updateContributors(index);
     });
